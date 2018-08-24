@@ -11,7 +11,7 @@ Add `?TABLE_NAME` to URL to get radar for a specific CityScope table, i.e:
 
 #### Development
 
-- Clone & run with `npm install`, `npm test`
+- Clone & run with `npm install`, `npm start`
 - edit `radarMath.js` to add math functions on `cityIO` data [or any other data you're calling in `index.js`]
 - edit/add/remove/compare radar axes in `radarMath.js`
 
