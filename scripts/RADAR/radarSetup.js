@@ -24,12 +24,13 @@ export function radarUpdate(cityIOjson, radarChartObj, interval) {
 // let radarChartMethod;
 
 export function radarInit() {
-  var globalColors = ["#ff48c4", "#2bd1fc"];
-
+  var globalColors = ["rgb(116,185,36)", "rgb(22,178,223)", "rgb(42,105,135)" ];
+//"#ff48c4" "#2bd1fc" pink and blue
   let radarDiv = document.createElement("div");
   radarDiv.id = "radarDiv";
   radarDiv.className = "radarDiv";
   document.body.appendChild(radarDiv);
+  
   //
   var color = d3.scale.ordinal().range(globalColors);
   //size of radar

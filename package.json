@@ -4,7 +4,7 @@
   "description": "CityScopeJS Walkability API",
   "main": "index.js",
   "scripts": {
-    "start" : "parcel ./index.html"
+    "start": "parcel ./index.html"
   },
   "repository": {
     "type": "git",

@@ -60,42 +60,75 @@ export class RadarMath {
 export function radarStruct(radarMath) {
   return [
     {
-      key: "Boston",
+      key: "BostonDYNAMIC",
       values: [
-        { axis: "Work", value: radarMath.typeRatio("0") },
-        { axis: "Live", value: radarMath.typeRatio("1") },
-        { axis: "ratioLW", value: radarMath.ratioLiveWork("2", "0") },
-        { axis: "Unique", value: radarMath.uniqueTypes() },
-        { axis: "A", value: radarMath.timeRemap() },
-        { axis: "B", value: radarMath.typeRatio("1") },
-        { axis: "C", value: radarMath.timeRemap() },
-        { axis: "D", value: radarMath.timeRemap() },
-        { axis: "E", value: radarMath.uniqueTypes() },
-        { axis: "F", value: radarMath.typeRatio("0") },
-        { axis: "G", value: radarMath.timeRemap() },
-        { axis: "H", value: radarMath.typeRatio("2") },
-        { axis: "I", value: radarMath.typeRatio("3") },
-        { axis: "J", value: radarMath.timeRemap() }
+        { axis: "Residentia Density", value: 0.70 + radarMath.typeRatio("0") },
+        { axis: "Employment Density", value: 0.57 + radarMath.typeRatio("1") },
+        { axis: "3rd places (day) Density", value: 0.40 + radarMath.ratioLiveWork("2", "0") },
+        { axis: "3rd places (Night) Density", value: 0.20 + radarMath.uniqueTypes("1") },
+        { axis: "Cultural Density", value: 0.50 + radarMath.uniqueTypes("1") },
+        { axis: "Co-working Density", value: 0.55 + radarMath.typeRatio("3") },
+        { axis: "Educational Density", value: 0.60 + radarMath.typeRatio("1") },
+        { axis: "Access to Parks", value: 0.45 + radarMath.typeRatio("3") },
+        { axis: "Access to public Transport", value: 0.50 + radarMath.typeRatio("3") },
+        { axis: "Intersection Density", value: 0.40 + radarMath.uniqueTypes("1") },
+        { axis: "Access to look-out (Police)", value: 0.50 + radarMath.typeRatio("0") },
+        { axis: "Access to Healthy food", value: 0.35 + radarMath.typeRatio("3") },
+        { axis: "Access to Sports", value: 0.54 + radarMath.typeRatio("2") },
+        { axis: "Residential Diversity", value: 0.50 + radarMath.typeRatio("3") },
+        { axis: "Employment Diversity", value: 0.47 + radarMath.typeRatio("3") },
+        { axis: "3rd Places Diversity", value: 0.52 + radarMath.typeRatio("3") },
+        { axis: "Cultural Diversity", value: 0.45 + radarMath.typeRatio("3") },
+        { axis: "Educational Diversity", value: 0.50 + radarMath.timeRemap("1") }
+        //axis: "Educational Diversity", value: 0.50 + radarMath.timeRemap() }
       ]
     },
     {
-      key: "Andorra",
+      key: "BostonEXISTING",
       values: [
-        { axis: "Work", value: 0.2 },
-        { axis: "Live", value: 0.5 },
-        { axis: "ratioLW", value: 0.2 },
-        { axis: "Open", value: 0.1 },
-        { axis: "Unique", value: 0.5 },
-        { axis: "A", value: 0.74 },
-        { axis: "B", value: 0.4 },
-        { axis: "C", value: 0.8 },
-        { axis: "D", value: 0.1 },
-        { axis: "E", value: 0.5 },
-        { axis: "F", value: 0.74 },
-        { axis: "G", value: 0.43 },
-        { axis: "H", value: 0.4 },
-        { axis: "I", value: 0.2 },
-        { axis: "J", value: radarMath.uniqueTypes() }
+        { axis: "Residentia Density", value: 0.70 },
+        { axis: "Employment Density", value: 0.57 },
+        { axis: "3rd places (day) Density", value: 0.40 },
+        { axis: "3rd places (Night) Density", value: 0.20 },
+        { axis: "Cultural Density", value: 0.50 },
+        { axis: "Co-working Density", value: 0.55},
+        { axis: "Educational Density", value: 0.60 },
+        { axis: "Access to Parks", value: 0.45 },
+        { axis: "Access to public Transport", value: 0.50 },
+        { axis: "Intersection Density", value: 0.40 },
+        { axis: "Access to look-out (Police)", value: 0.50 },
+        { axis: "Access to Healthy food", value: 0.35 },
+        { axis: "Access to Sports", value: 0.54 },
+        { axis: "Residential Diversity", value: 0.50 },
+        { axis: "Employment Diversity", value: 0.47 },
+        { axis: "3rd Places Diversity", value: 0.52 },
+        { axis: "Cultural Diversity", value: 0.45 },
+        { axis: "Educational Diversity", value: 0.50 }
+        //{ axis: "J", value: radarMath.uniqueTypes() }
+      ]
+    },
+    {
+      key: "Barcelona",
+      values: [
+          { axis: "Residentia Density", value: 0.85 },
+          { axis: "Employment Density", value: 0.60 },
+          { axis: "3rd places (day) Density", value: 0.85 },
+          { axis: "3rd places (Night) Density", value: 0.78 },
+          { axis: "Cultural Density", value: 0.80 },
+          { axis: "Co-working Density", value: 0.65 },
+          { axis: "Educational Density", value: 0.72 },
+          { axis: "Access to Parks", value: 0.40 },
+          { axis: "Access to public Transport", value: 0.91 },
+          { axis: "Intersection Density", value: 0.89 },
+          { axis: "Access to look-out (Police)", value: 0.55 },
+          { axis: "Access to Healthy food", value: 0.65 },
+          { axis: "Access to Sports", value: 0.60 },
+          { axis: "Residential Diversity", value: 0.86 },
+          { axis: "Employment Diversity", value: 0.79 },
+          { axis: "3rd Places Diversity", value: 0.82 },
+          { axis: "Cultural Diversity", value: 0.84 },
+          { axis: "Educational Diversity", value: 0.69 }
+        //{ axis: "J", value: radarMath.uniqueTypes() }
       ]
     }
   ];
