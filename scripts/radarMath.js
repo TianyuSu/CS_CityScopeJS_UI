@@ -6,53 +6,120 @@ export class RadarMath {
   constructor(data) {
     this.data = data;
   }
-  ///////////////////////////
-  uniqueTypes() {
-    var uniqueItems = Array.from(new Set(this.data.grid));
-    return uniqueItems.length / this.data.grid.length;
-  }
 
-  ///////////////////////////
-
-  typeRatio(type) {
-    let ratioCount = 0;
+  ///////////// diversity /////////////
+  diversity(type) {
+    let diversityCount = 0;
     let d = this.data.grid;
-
-    for (let i = 0; i < d.length; i++) {
-      if (d[i].toString() === type) {
-        ratioCount += 1;
+    for (let i = 0; i < 100; i++) {
+      if (d[i].toString() == type) {
+        diversityCount += 1;
       }
     }
-    return ratioCount / d.length;
+    console.log('diversity:',diversityCount/100)
+    return diversityCount / 100
   }
-  ///////////////////////////
 
-  ratioLiveWork(type1, type2) {
-    let rc1 = 0;
-    let rc2 = 0;
-    let d = this.data.grid;
 
-    for (let i = 0; i < d.length; i++) {
-      if (d[i].toString() === type1) {
-        rc1 += 1;
-      } else if (d[i].toString() === type2) {
-        rc2 += 1;
-      } else {
-        // return;
-        continue;
+  ///////////// cosharing /////////////
+
+  avg5x5(row,col,d){
+
+    let count0=0;
+    let count1=0;
+    let count2=0;
+    let count3=0;
+    let count4=0;
+
+    for (let i = row-2; i <=row+2; i++){
+      for (let j = col-2; j <=col+2; j++){
+        if ((i < 0) || (j<0) || (i>9) || (j>9) || ((i==row) && (j==col))){
+          continue;
+        }
+        else if (d[i][j] == 5){
+          count0 += 1;
+        }
+        else if (d[i][j] == 1){
+          count1 += 1;
+        }
+        else if (d[i][j] == 2){
+          count2 += 1;
+        }
+        else if (d[i][j] == 3){
+          count3 += 1;
+        }
+        else if (d[i][j] == 4){
+          count4 += 1;
+        }
       }
     }
-    return rc2 / rc1;
+    let cell = {"1":count1/24,"2":count2/24,"3":count3/24,"4":count4/24,"5":count0/24};
+    return cell
   }
-  ///////////////////////////
 
-  timeRemap() {
-    var cityioTime = this.data.meta.timestamp;
-    var d = new Date();
-    var n = d.getTime();
-    return (Math.random() * cityioTime) / n;
+  sqr(a,b){
+    return (a-b)*(a-b)
+  }
+
+
+  std(arr,d) {
+    let ans = [];
+
+    let coef = [[0,0,0,0,0],
+                [0.5,0.2,0.1,0.1,0.1],
+                [0.3,0.2,0.1,0.2,0.2],
+                [0.3,0.2,0.1,0.1,0.3],
+                [0.2,0.2,0.2,0.3,0.1],
+                [0.4,0.1,0.1,0.2,0.1]];
+
+    for (let i = 0; i < 100; i++) {
+      let tmp = 0;
+      for (let j = 0; j < 5; j++){
+        if (d[i]+1 != 6) {
+          tmp += this.sqr(arr[i][j+1], coef[(d[i]+1)][j]);
+        }
+      }
+      ans.push(Math.sqrt(tmp/5))
+    }
+
+    return ans
+  }
+
+  coSharing(type){
+    let res = [];
+    let arr = [];
+
+    let n = 10;
+    let d = this.data.grid;
+    for (let i = 0; i < 100; i++) {
+      let temp = d.slice(i*n, i*n+n);
+      res.push(temp);
+    }
+    for (let i = 0; i < 10; i++){
+      for (let j = 0; j < 10; j++){
+        arr.push(this.avg5x5(i,j,res)) //10*10*5
+      }
+    }
+    let coShare = this.std(arr,d);
+
+    let ans = 0
+    let count = 0
+    for (let i = 0; i < 100; i++){
+      if ( d[i]== type ){
+        ans += coShare[i]
+        count += 1
+      }
+    }
+    ans = ans/count 
+    return ans
   }
 }
+
+
+
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////
 //a class to set the radar structure
@@ -62,40 +129,18 @@ export function radarStruct(radarMath) {
     {
       key: "Boston",
       values: [
-        { axis: "Work", value: radarMath.typeRatio("0") },
-        { axis: "Live", value: radarMath.typeRatio("1") },
-        { axis: "ratioLW", value: radarMath.ratioLiveWork("2", "0") },
-        { axis: "Unique", value: radarMath.uniqueTypes() },
-        { axis: "A", value: radarMath.timeRemap() },
-        { axis: "B", value: radarMath.typeRatio("1") },
-        { axis: "C", value: radarMath.timeRemap() },
-        { axis: "D", value: radarMath.timeRemap() },
-        { axis: "E", value: radarMath.uniqueTypes() },
-        { axis: "F", value: radarMath.typeRatio("0") },
-        { axis: "G", value: radarMath.timeRemap() },
-        { axis: "H", value: radarMath.typeRatio("2") },
-        { axis: "I", value: radarMath.typeRatio("3") },
-        { axis: "J", value: radarMath.timeRemap() }
-      ]
-    },
-    {
-      key: "Andorra",
-      values: [
-        { axis: "Work", value: 0.2 },
-        { axis: "Live", value: 0.5 },
-        { axis: "ratioLW", value: 0.2 },
-        { axis: "Open", value: 0.1 },
-        { axis: "Unique", value: 0.5 },
-        { axis: "A", value: 0.74 },
-        { axis: "B", value: 0.4 },
-        { axis: "C", value: 0.8 },
-        { axis: "D", value: 0.1 },
-        { axis: "E", value: 0.5 },
-        { axis: "F", value: 0.74 },
-        { axis: "G", value: 0.43 },
-        { axis: "H", value: 0.4 },
-        { axis: "I", value: 0.2 },
-        { axis: "J", value: radarMath.uniqueTypes() }
+        { axis: "ratio", value:0},
+        { axis: "Start-up: D", value: radarMath.diversity("5") },
+        { axis: "Incubator: D", value: radarMath.diversity("1") },
+        { axis: "Service: D", value: radarMath.diversity("2") },
+        { axis: "Key Lab: D", value: radarMath.diversity("3") },
+        { axis: "Co-creation: D", value: radarMath.diversity("4") },
+        { axis: "%", value:0},
+        { axis: "Start-up: S", value: radarMath.coSharing("0") },
+        { axis: "Incubator: S", value: radarMath.coSharing("1") },
+        { axis: "Service: S", value: radarMath.coSharing("2") },
+        { axis: "Key Lab: S", value: radarMath.coSharing("3") },
+        { axis: "Co-creation: S", value: radarMath.coSharing("4") }
       ]
     }
   ];
