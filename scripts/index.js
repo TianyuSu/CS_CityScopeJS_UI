@@ -35,21 +35,22 @@ import { info } from "./RADAR/ui";
 import { radarInit, radarUpdate } from "./RADAR/radarSetup";
 
 // global vars for fun
-let tableName = "cityscopeJSwalk";
+//let tableName = "cityscopeJSwalk";
+let tableName = "CityScopeJS_SZ";
 
 let cityIOtableURL =
   "https://cityio.media.mit.edu/api/table/" + tableName.toString();
 
-if (window.location.search) {
-  console.log(window.location.search);
-  cityIOtableURL =
-    "https://cityio.media.mit.edu/api/table/" +
-    window.location.search.substr(1);
-}
+// if (window.location.search) {
+//   console.log(window.location.search);
+//   cityIOtableURL =
+//     "https://cityio.media.mit.edu/api/table/"
+//     window.location.search.substr(1);
+// }
 console.log(cityIOtableURL);
 
 //update interval
-let interval = 2000;
+let interval = 1500;
 
 async function init() {
   info();
@@ -75,6 +76,23 @@ function cityIOupdater(radarChartObj) {
     //get the data through promise
     cityIOdata = await getCityIO(cityIOtableURL);
     // update to radar
+    for (var i=0; i<100; i++) {
+      if ((cityIOdata['grid'][i] == 1)||(cityIOdata['grid'][i] == 2)||(cityIOdata['grid'][i] == 3)||(cityIOdata['grid'][i] == 4)){
+        cityIOdata['grid'][i] = 1
+      }
+      if ((cityIOdata['grid'][i] == 5)||(cityIOdata['grid'][i] == 6)){
+        cityIOdata['grid'][i] = 2
+      }
+      if ((cityIOdata['grid'][i] == 7)||(cityIOdata['grid'][i] == 8)){
+        cityIOdata['grid'][i] = 3
+      }
+      if ((cityIOdata['grid'][i] == 9)||(cityIOdata['grid'][i] == 10)||(cityIOdata['grid'][i] == 11)||(cityIOdata['grid'][i] == 12)){
+        cityIOdata['grid'][i] = 4
+      }
+      if (cityIOdata['grid'][i] == 13){
+        cityIOdata['grid'][i] = 5
+      }
+    }
     radarUpdate(cityIOdata, radarChartObj, 1500);
   }
 }
@@ -86,16 +104,17 @@ function cityIOupdater(radarChartObj) {
  */
 
 function getCityIO(cityIOtableURL) {
-  // console.log("trying to fetch " + cityIOtableURL);
-  return fetch(cityIOtableURL)
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(cityIOdata) {
-      // console.log("got cityIO table at " + cityIOdata.meta.timestamp);
-      return cityIOdata;
-    });
-}
+    // console.log("trying to fetch " + cityIOtableURL);
+    return fetch(cityIOtableURL)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(cityIOdata) {
+        //console.log("got cityIO table at " + cityIOdata.meta.timestamp);
+        console.log(cityIOdata);
+        return cityIOdata;
+      });
+  }
 
 ////////////////////////////////////////////////////////////////////
 
